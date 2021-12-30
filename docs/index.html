@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 0.32.4">
+  <meta name="description" content="theta API docs, for the Dart programming language.">
+  <title>theta - Dart API docs</title>
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://codetricity.github.io/theta">theta package</a></li>
+  </ol>
+  <div class="self-name">theta</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="https://codetricity.github.io/theta">theta package</a></li>
+    </ol>
+    
+    <h5 class="hidden-xs"><span class="package-name">theta</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Libraries</li>
+          <li><a href="theta/theta-library.html">theta</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <section class="desc markdown">
+        <h1 id="dart-library-for-ricoh-theta-mobile-and-desktop-developers">Dart library for RICOH THETA Mobile and Desktop Developers</h1>
+<p>Based on <a href="https://api.ricoh/docs/theta-web-api-v2.1/">THETA Web API v2.1</a>. For information
+on connecting the camera and testing the camera API with a command line tool,
+see <a href="https://github.com/theta360developers/webapi/blob/master/README.md">RICOH THETA API HTTP Community Tests README</a>.</p>
+<p>This is for education and testing use only and should not be used for production.  Only
+a portion of the API has been implemented.  We are using this library
+to document usage of the API and show prototypes of concepts such as displaying thumbnails.
+We are not to using the library to build production apps.</p>
+<p>This project is not connected to any official RICOH project.</p>
+<h2 id="installation">Installation</h2>
+<ol>
+<li>save the packages directory to the root directory of your Flutter or Dart app</li>
+<li>Add the following dependency to <code>pubspec.yaml</code></li>
+</ol>
+<pre class="language-yaml"><code class="language-yaml">dependencies:
+  theta:
+    path: packages/theta
+</code></pre>
+<ol start="3">
+<li>import the library</li>
+</ol>
+<pre class="language-dart"><code class="language-dart">import 'package:theta/theta.dart';
+</code></pre>
+<h3 id="install-from-github">Install from GitHub</h3>
+<p>Alternately, you can install the package automatically from GitHub without
+having to copy the files into your project.  To automatically install from
+GitHub, add the following to your <code>pubspec.yaml</code> file.</p>
+<pre class="language-yaml"><code class="language-yaml">dependencies:
+  theta:
+    git:
+      url: https://github.com/codetricity/theta
+      ref: main
+</code></pre>
+<h2 id="example-command-line-use">Example Command Line Use</h2>
+<pre class="language-dart"><code class="language-dart">...
+yourFunction() async {
+    print(await Camera.info);
+}
+</code></pre>
+<h3 id="full-program-example">Full Program Example</h3>
+<p>A fully working program showing the <code>main</code> top-level function where the Dart
+app starts working.</p>
+<pre class="language-dart"><code class="language-dart">import 'package:theta/theta.dart';
+
+void main(List&lt;String&gt; args) async {
+  print(await Camera.info);
+}
+</code></pre>
+<p>Assuming the test program is in <code>./bin/test_temporary.dart</code>, you can run the program and
+see the output with:</p>
+<pre class="language-shell"><code class="language-shell">&gt; dart .\bin\test_temporary.dart     
+{manufacturer: RICOH, model: RICOH THETA SC2, serialNumber: 20001005, firmwareVersion: 01.51, supportUrl: https://theta360.com/en/support/, gps: false, gyro: true, endpoints: {httpPort: 80, httpUpdatesPort: 80}, apiLevel: [2], api: [/osc/info, /osc/state, /osc/checkForUpdates, /osc/commands/execute, /osc/commands/status], uptime: 2088, _wlanMacAddress: 58:38:79:2b:ad:c5, _bluetoothMacAddress: 
+6c:21:a2:47:d9:05}
+</code></pre>
+<h3 id="formatting-camera-output-for-humans-to-read">Formatting Camera Output for Humans to Read</h3>
+<p>You can format the output with the following conversion where <code>map</code> is the output from info.</p>
+<pre class="language-dart"><code class="language-dart">JsonEncoder.withIndent('  ').convert(map)
+</code></pre>
+<p>Example:</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:convert';
+import 'package:theta/theta.dart';
+
+String pretty(map) {
+  return (JsonEncoder.withIndent('  ').convert(map));
+}
+
+void main(List&lt;String&gt; args) async {
+  print(pretty(await Camera.info));
+}
+</code></pre>
+<p>Your output will now have nice indents.</p>
+<pre class="language-shell"><code class="language-shell">&gt; dart .\bin\test_temporary.dart
+{
+  "manufacturer": "RICOH",
+  "model": "RICOH THETA SC2",
+  "serialNumber": "20001005",
+  "firmwareVersion": "01.51",
+  "supportUrl": "https://theta360.com/en/support/",
+  "gps": false,
+  "gyro": true,
+  "endpoints": {
+    "httpPort": 80,
+</code></pre>
+<h2 id="example-use-with-flutter">Example Use with Flutter</h2>
+<p><a href="https://github.com/codetricity/theta_webapi_flutter_minimal">Flutter demo repo</a></p>
+<p><img src="https://raw.githubusercontent.com/codetricity/theta_webapi_flutter_minimal/main/docs/images/android_demo.gif" alt="screenshot of flutter app"></p>
+<p>Full code for demo above from the <code>main.dart file</code>.</p>
+<p>Note that you likely want to break up your program into separate files
+and use state management such as BLoC or Provider in your actual app.
+The example uses a stateful widget to show the basic use of the library.</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:theta/theta.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'THETA API Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'THETA API Demo'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() =&gt; _MyHomePageState();
+}
+
+class _MyHomePageState extends State&lt;MyHomePage&gt; {
+  String response = '';
+  bool textResponse = true;
+  String image64 = '';
+
+  void _info() async {
+    _displayResponse(await Camera.info);
+  }
+
+  void _model() async {
+    _displayResponse(await Camera.model);
+  }
+
+  void _firmware() async {
+    _displayResponse(await Camera.firmware);
+  }
+
+  void _takePicture() async {
+    _displayResponse(await ThetaRun.takePicture());
+  }
+
+  void _state() async {
+    _displayResponse(await Camera.state);
+  }
+
+  void _displayResponse(mapData) {
+    setState(() {
+      textResponse = true;
+      response = JsonEncoder.withIndent('  ').convert(mapData);
+    });
+  }
+
+  void _displayThumb() async {
+    var imageData = await ThetaFile.getLastThumb64();
+    setState(() {
+      textResponse = false;
+      image64 = imageData;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: ListView(
+          children: &lt;Widget&gt;[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MaterialButton(
+                  onPressed: _info,
+                  child: Text('info'),
+                  color: Colors.lightGreen,
+                ),
+                MaterialButton(
+                  onPressed: _model,
+                  child: Text('model'),
+                  color: Colors.lightGreen,
+                ),
+                MaterialButton(
+                  onPressed: _firmware,
+                  child: Text('firmware'),
+                  color: Colors.lightGreen,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MaterialButton(
+                  onPressed: _state,
+                  child: Text('state'),
+                  color: Colors.lightGreen,
+                ),
+                MaterialButton(
+                  onPressed: _takePicture,
+                  child: Text('take picture'),
+                  color: Colors.lightGreen,
+                ),
+                MaterialButton(
+                  onPressed: _displayThumb,
+                  child: Text('thumb'),
+                  color: Colors.lightGreen,
+                ),
+              ],
+            ),
+            textResponse
+                ? Text(response)
+                : Container(child: Image.memory(base64Decode(image64))),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+      </section>
+      
+        <section class="summary">
+            <h2>Libraries</h2>
+          <dl>
+            <dt id="theta">
+              <span class="name"><a href="theta/theta-library.html">theta</a></span>             
+            </dt>
+            <dd>
+              Flutter and Dart support for RICOH THETA WebAPI 
+            </dd>
+          </dl>
+        </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    theta
+      0.1.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>
